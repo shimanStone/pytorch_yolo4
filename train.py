@@ -75,8 +75,10 @@ if __name__ == '__main__':
     #
     num_workers = 4   # 设置是否多线程读取数据
     #
+    colab = '_colab' if Cuda else ''
+
     train_annotation_path, val_annotation_path = \
-        f'{root_dir}/data/2007_train.txt', f'{root_dir}/data/2007_val.txt'
+        f'{root_dir}/data/2007_train{colab}.txt', f'{root_dir}/data/2007_val{colab}.txt'
     #
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     local_rank = 0
