@@ -6,9 +6,13 @@
 # @describe:
 
 import os
-root_dir = os.path.dirname(os.path.abspath(__file__))
 
 import sys
+cur_dir = os.path.dirname(os.path.abspath(__file__))
+root_dir = os.path.dirname(cur_dir)
+print(f'cur_dir: {cur_dir}')
+
+sys.path.append(os.path.abspath(cur_dir))
 sys.path.append(os.path.abspath(root_dir))
 print(sys.path)
 
@@ -31,12 +35,12 @@ if __name__ == '__main__':
 
     Cuda = torch.cuda.is_available()
     # 分类文件
-    classes_path = f'{root_dir}/data/voc_classes.txt'
+    classes_path = f'{cur_dir}/data/voc_classes.txt'
     # anchors配置
-    anchors_path = f'{root_dir}/data/yolo_anchors.txt'
+    anchors_path = f'{cur_dir}/data/yolo_anchors.txt'
     anchors_mask = [[6,7,8],[3,4,5],[0,1,2]]
     # 模型信息
-    model_path = f'{root_dir}/data/yolo4_voc_weights.pth'
+    model_path = f'{cur_dir}/data/yolo4_voc_weights.pth'
     input_shape = [416, 416]
     #
     pretrained = False
@@ -82,7 +86,7 @@ if __name__ == '__main__':
     colab = '_colab' if Cuda else ''
 
     train_annotation_path, val_annotation_path = \
-        f'{root_dir}/data/2007_train{colab}.txt', f'{root_dir}/data/2007_val{colab}.txt'
+        f'{cur_dir}/data/2007_train{colab}.txt', f'{cur_dir}/data/2007_val{colab}.txt'
     #
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     local_rank = 0
@@ -214,18 +218,6 @@ if __name__ == '__main__':
             fit_one_epoch(model_train, model, yolo_loss, loss_history, optimizer, epoch, epoch_step,
                           epoch_step_val, gen, gen_val, unfreeze_epoch, Cuda, save_period, save_dir)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+        loss_history.writer.close()
 
 

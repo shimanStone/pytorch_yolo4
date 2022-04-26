@@ -314,8 +314,12 @@ class YOLOLoss(nn.Module):
         # 将预测结果进行解码，判断预测结果和真实值的重合程度, 并获得调整后的预测框
         # pred_boxes shape(bs,3,in_h,in_w,4) xywh
         noobj_mask, pred_boxes = self.get_ignore(l, x,y,w,h,targets, scaled_anchors, in_h, in_w, noobj_mask)
+        if self.cuda:
+            y_true = y_true.type_as(x)
+            noobj_mask = noobj_mask.type_as(x)
+            box_loss_scale = box_loss_scale.type_as(x)
         # 2-宽高的乘积代表真实框越大，比重越小，小框的比重更大，使用iou损失时，大中小目标的回归损失不存在比例失衡问题，故弃用
-        box_loss_scale = 2 - 1
+        box_loss_scale = 2 - box_loss_scale
         #
         loss = 0
         obj_mask = y_true[...,4] == 1
