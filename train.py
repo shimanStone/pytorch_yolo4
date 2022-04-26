@@ -8,6 +8,10 @@
 import os
 root_dir = os.path.dirname(os.path.abspath(__file__))
 
+import sys
+sys.path.append(os.path.abspath(root_dir))
+print(sys.path)
+
 import numpy as np
 
 import torch
