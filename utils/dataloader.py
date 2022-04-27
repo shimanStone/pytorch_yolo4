@@ -71,9 +71,9 @@ class YoloDataset(Dataset):
                 if i == 0:
                     if y1 > cuty or x1 > cutx:
                         continue
-                    if y2 >=cuty and y1 < cuty:
+                    if y2 >=cuty and y1 <= cuty:
                         y2 = cuty
-                    if x2 >= cutx and x1 < cutx:
+                    if x2 >= cutx and x1 <= cutx:
                         x2 = cutx
                 if i == 1:
                     if y2 < cuty or x1 > cutx:
@@ -188,7 +188,7 @@ class YoloDataset(Dataset):
         dtype = new_image.dtype
         #
         x = np.arange(0,256, dtype=r.dtype)
-        lut_hue = ((x*r[0]%180)).astype(dtype)
+        lut_hue = ((x*r[0])%180).astype(dtype)
         lut_sat = np.clip(x*r[1], 0, 255).astype(dtype)
         lut_val = np.clip(x*r[2], 0, 255).astype(dtype)
 
