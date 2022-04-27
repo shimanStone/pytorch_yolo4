@@ -47,11 +47,10 @@ class LossHistory():
 
         self.writer.add_scalar('loss', loss, epoch)
         self.writer.add_scalar('val_loss', val_loss, epoch)
-        self.loss_plot(epoch)
+        self.loss_plot()
 
-    def loss_plot(self, epoch):
+    def loss_plot(self):
         iters = range(len(self.losses))
-        iters = [i+epoch for i in iters]
 
         plt.figure()
         plt.plot(iters, self.losses, 'red', linewidth=2, label='train loss')
