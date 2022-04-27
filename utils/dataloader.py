@@ -130,7 +130,7 @@ class YoloDataset(Dataset):
                 nw = int(nh*new_arr)
             else:
                 nw = int(scale*w)
-                nh = int(nw*new_arr)
+                nh = int(nw/new_arr)
             image = image.resize((nw, nh), Image.BICUBIC)
 
             # 将图片进行放置，分别对应四张分割图片位置
